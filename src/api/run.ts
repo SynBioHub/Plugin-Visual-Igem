@@ -10,7 +10,7 @@ let wasDerivedFromPredicate: string = "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 async function run(req: Request, res: Response) {
     let config = new Config()
-    let sbolUrl: string = req.body.complete_sbol
+    let sbolUrl: string = req.body.shallow_sbol
     let topLevelUri: string = req.body.top_level
 
     let graph: SBOL2Graph = await SBOL2Graph.loadURL(sbolUrl)
@@ -25,7 +25,7 @@ async function run(req: Request, res: Response) {
         .find(wdf => wdf.object.toString().startsWith("http://parts.igem.org/"))
     
     if (wasDerivedFrom == undefined) {
-        res.send("<b>Plugin error</b>")
+        res.sendStatus(404).end()
         return
     }
 
