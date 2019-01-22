@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 import { Config } from './lib/config';
@@ -12,7 +12,7 @@ function app(): express.Express {
 
     // API Endpoints
     app.get('/status', status);
-    app.post('/status', bodyParser.json(), status);
+    app.post('/run', bodyParser.json(), run);
 
     return app;
 }

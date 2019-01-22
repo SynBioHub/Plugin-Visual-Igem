@@ -5,6 +5,4 @@ let config = new Config();
 let server = app();
 let port = config.get('applicationPort');
 
-function startServer() {
-    server.listen(port);
-}
+server.listen(port);

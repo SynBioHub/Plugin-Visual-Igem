@@ -1,14 +1,5 @@
-/* SynBioHub Federator
- * Web of Registries
- *
- * Configuration file manager
- *
- * Written by Zach Zundel
- * 16-06-2017
- */
-
 import * as fs from 'fs'
-import * as xtend from 'xtend';
+import xtend from 'xtend';
 
 // Default file locations
 const configFilename = './data/config.json';
