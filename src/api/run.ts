@@ -1,11 +1,15 @@
 import { Request, Response } from 'express'
 import { SBOL2Graph, S2Identified } from 'sbolgraph'
+import { Config } from '../lib/config'
 import * as request from 'request'
+const postprocess_igem = require('../lib/postprocess_igem')
+
 
 let topLevelPredicate: string = "http://wiki.synbiohub.org/wiki/Terms/synbiohub#topLevel"
 let wasDerivedFromPredicate: string = "http://www.w3.org/ns/prov#wasDerivedFrom"
 
 async function run(req: Request, res: Response) {
+    let config = new Config()
     let sbolUrl: string = req.body.complete_sbol
     let topLevelUri: string = req.body.top_level
 
@@ -26,14 +30,14 @@ async function run(req: Request, res: Response) {
     }
 
     wasDerivedFrom = wasDerivedFrom.object.toString()
+    let suffix = config.get('iGEMSuffix') 
 
-    request.get(wasDerivedFrom + "?action=render", (err, resp, body) => {
+    request.get(wasDerivedFrom + suffix, (err: any, resp: any, body: any) => {
         if (err || res.statusCode > 300) {
             return
         }
 
-        console.log("Sending response")
-        res.send(body)
+        res.send(postprocess_igem(body))
     })
 }
 

@@ -1,3 +1,4 @@
 {
-    "applicationPort": 3000
+    "applicationPort": 3000,
+    "iGEMSuffix": "?action=render"
 }
