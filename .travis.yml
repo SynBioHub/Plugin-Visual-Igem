@@ -1,0 +1,17 @@
+sudo: required
+
+language: node_js
+node_js:
+    - "lts/*"
+
+services:
+    - docker
+
+jobs:
+    include:
+        - stage: push
+          install:
+              - docker build -t synbiohub/igem-plugin:snapshot -f docker/Dockerfile .
+          script: docker/push.sh
+          if: branch = master AND type = push
+
