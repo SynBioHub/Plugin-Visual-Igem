@@ -11,8 +11,8 @@ function app(): express.Express {
     let app = express();
 
     // API Endpoints
-    app.get('/status', status);
-    app.post('/run', bodyParser.json(), run);
+    app.get('/:type/status', status);
+    app.post('/:type/run', bodyParser.json(), run);
 
     return app;
 }

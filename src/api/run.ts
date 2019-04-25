@@ -4,9 +4,25 @@ import { Config } from '../lib/config'
 import * as request from 'request'
 const postprocess_igem = require('../lib/postprocess_igem')
 
-
 let topLevelPredicate: string = "http://wiki.synbiohub.org/wiki/Terms/synbiohub#topLevel"
 let wasDerivedFromPredicate: string = "http://www.w3.org/ns/prov#wasDerivedFrom"
+
+function getSuffix(requestType: string) {
+    switch (requestType) {
+        case "main": {
+            return "?action=render"
+        }
+        case "design": {
+            return ":Design?action=render"
+        }
+        case "experience": {
+            return ":Experience?action=render"
+        }
+        default: {
+            throw new Error("Invalid request type!")
+        }
+    }
+}
 
 async function run(req: Request, res: Response) {
     let config = new Config()
@@ -30,7 +46,7 @@ async function run(req: Request, res: Response) {
     }
 
     wasDerivedFrom = wasDerivedFrom.object.toString()
-    let suffix = config.get('iGEMSuffix') 
+    let suffix = getSuffix(req.params.type)
 
     request.get(wasDerivedFrom + suffix, (err: any, resp: any, body: any) => {
         if (err || res.statusCode > 300) {
