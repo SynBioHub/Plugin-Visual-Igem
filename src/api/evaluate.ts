@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 async function evaluate(req: Request, res: Response) {
     let objType = req.body.type
 
-    if (objType.toLowerCase() == "componentdefinition") {
+    if (objType.toLowerCase().startsWith("component")) {
       // Send a 200 
       res.send("Acceptable!") 
     } else {
